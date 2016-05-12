@@ -5,3 +5,4 @@ en:
         filled?: "Please provide your email"
       text:
         custom_limit: "Custom limit of %{arg0} exceeded"
+    email?: "must be an email"

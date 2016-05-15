@@ -23,11 +23,16 @@ module Dry
         end
 
         def hash?(&block)
-          val = Value[name]
-          val.instance_eval(&block)
+          type_rule = create_rule([:val, [:predicate, [:hash?, []]]])
 
-          rule = create_rule([:val, [:predicate, [:hash?, []]]])
-            .and(create_rule([type, [name, val.to_ast]]))
+          if block
+            val = Value[name]
+            val.instance_eval(&block)
+
+            rule = type_rule.and(create_rule([type, [name, val.to_ast]]))
+          else
+            rule = type_rule
+          end
 
           add_rule(rule)
 
